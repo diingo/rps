@@ -6,6 +6,7 @@ end
 
 # Require all of our project files
 require_relative 'rps/player.rb'
+require_relative 'rps/match.rb'
 # require_relative 'use_case.rb'
 
 
