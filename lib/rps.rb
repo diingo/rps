@@ -8,6 +8,7 @@ end
 require_relative 'rps/player.rb'
 require_relative 'rps/match.rb'
 require_relative 'rps/round.rb'
+require_relative 'rps/db.rb'
 # require_relative 'use_case.rb'
 
 
