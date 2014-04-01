@@ -8,13 +8,13 @@ describe RPS::Match do
 
   it 'has a unique id' do
     RPS::Match.class_variable_set :@@counter, 0
-    expect(RPS::Match.new.id).to eq(1)
-    expect(RPS::Match.new.id).to eq(2)
-    expect(RPS::Match.new.id).to eq(3)
+    expect(RPS::Match.new(1,2).id).to eq(1)
+    expect(RPS::Match.new(1,2).id).to eq(2)
+    expect(RPS::Match.new(1,2).id).to eq(3)
   end
 
-  it "defaults has having player 1 and player 2 set to nil" do
-    expect(RPS::Match.new.p_1).to be_nil
-    expect(RPS::Match.new.p_2).to be_nil
+  it "starts with player 1 and player 2" do
+    expect(RPS::Match.new(1,2).p_1).to eq(1)
+    expect(RPS::Match.new(1,2).p_2).to eq(2)
   end
 end
