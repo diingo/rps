@@ -16,4 +16,5 @@ describe RPS::Player do
     expect(RPS::Player.new('Estevan').id).to eq(2)
     expect(RPS::Player.new('Estevan').id).to eq(3)
   end
+
 end
