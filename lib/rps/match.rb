@@ -1,7 +1,7 @@
 
 module RPS
   class Match
-    attr_reader :id, :p1, :p2
+    attr_reader :id, :p1_id, :p2_id
     attr_accessor :winner
     @@counter = 0
 
@@ -9,8 +9,8 @@ module RPS
       @@counter += 1
       @id = @@counter
       
-      @p1 = p1_id
-      @p2 = p2_id
+      @p1_id = p1_id
+      @p2_id = p2_id
       @winner = nil
     end
   end

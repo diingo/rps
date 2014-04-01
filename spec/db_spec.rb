@@ -31,11 +31,9 @@ describe RPS::DB do
       expect(retrieved_player.name).to eq("Jack")
     end
 
-    it "can create and access all players" do
-      player = @db.create_player("Jack")
-      retrieved_player = @db.get_player(player.id)
-
+    it "can access all players" do
       expect(@db.all_players.first.name).to eq("Jack")
+      expect(@db.all_players.size).to eq(1)
     end
 
     it "can update a player" do
@@ -64,22 +62,39 @@ describe RPS::DB do
       @p2 = @db.create_player("Sassa")
     end
 
-    xit "can create and get a new match" do
+    # TO DO - is this test ok
+    it "can create and get a new match" do
       match = @db.create_match(@p1.id, @p2.id)
+      # binding.pry
       retrieved_match = @db.get_match(match.id)
 
-      expect(retrieved_match.p1.id).to eq(p1.id)
-      expect(retrieved_match.p2.id).to eq(p2.id)
+      expect(retrieved_match.p1_id).to eq(@p1.id)
+      expect(retrieved_match.p2_id).to eq(@p2.id)
       expect(retrieved_match.winner).to be_nil
     end
 
     it "can create and access all matchess" do
+      match = @db.create_match(@p1.id, @p2.id)
+
+      expect(@db.all_matches.size).to eq(1)
+      expect(@db.all_matches.first.p1_id).to eq(@p1.id)
     end
 
     it "can update a match" do
+      match = @db.create_match(@p1.id, @p2.id)
+      updated_match = @db.update_match(match.id, { winner: @p1.id })
+
+      expect(match.winner).to eq(@p1.id)
     end
 
     it "can delete a match" do
+      match = @db.create_match(@p1.id, @p2.id)
+      retrieved_match = @db.get_match(match.id)
+      expect(retrieved_match).to_not be_nil
+
+      @db.delete_match(match.id)
+      retrieved_match = @db.get_match(match.id)
+      expect(retrieved_match).to be_nil
     end
   end
 

@@ -6,9 +6,9 @@ describe RPS::Round do
   end
 
   it "has a match id and winner id" do
-    
     round = RPS::Round.new(1,1)
     expect(round.match_id).to eq(1)
     expect(round.winner_id).to eq(1)
   end
+
 end

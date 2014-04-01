@@ -38,8 +38,31 @@ module RPS
     def update_player(pid, new_name)
       @players[pid].name = new_name
     end
+
     def delete_player(pid)
       @players.delete(pid)
+    end
+
+    ########################
+    ## Match CRUD Methods ##
+    ########################
+
+    def create_match(p1_id, p2_id)
+      match = RPS::Match.new(p1_id, p2_id)
+      @matches[match.id] = match
+    end
+
+    def get_match(mid)
+      @matches[mid]
+    end
+
+    def update_match(mid, options)
+      winner = options[:winner]
+      @matches[mid].winner = winner
+    end
+
+    def delete_match(mid)
+      @matches.delete(mid)
     end
   end
 end

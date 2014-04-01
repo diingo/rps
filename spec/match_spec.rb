@@ -14,8 +14,8 @@ describe RPS::Match do
   end
 
   it "starts with player 1 and player 2" do
-    expect(RPS::Match.new(1,2).p1).to eq(1)
-    expect(RPS::Match.new(1,2).p2).to eq(2)
+    expect(RPS::Match.new(1,2).p1_id).to eq(1)
+    expect(RPS::Match.new(1,2).p2_id).to eq(2)
   end
 
   it "gets created with no winner" do
