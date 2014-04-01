@@ -1,15 +1,17 @@
 
 module RPS
   class Match
-    attr_reader :id
-    attr_reader :p_1, :p_2
+    attr_reader :id, :p1, :p2
+    attr_accessor :winner
     @@counter = 0
 
     def initialize(p1_id, p2_id)
       @@counter += 1
       @id = @@counter
-      @p_1 = p1_id
-      @p_2 = p2_id
+      
+      @p1 = p1_id
+      @p2 = p2_id
+      @winner = nil
     end
   end
 end

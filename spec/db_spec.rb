@@ -57,17 +57,30 @@ describe RPS::DB do
   ########################
   ## Match CRUD Methods ##
   ########################
-  it "can create and get a match" do
 
-  end
+  describe "Match CRUD Methods" do
+    before do
+      @p1 = @db.create_player("Johnny")
+      @p2 = @db.create_player("Sassa")
+    end
 
-  it "can create and access all matchess" do
-  end
+    xit "can create and get a new match" do
+      match = @db.create_match(@p1.id, @p2.id)
+      retrieved_match = @db.get_match(match.id)
 
-  it "can update a match" do
-  end
+      expect(retrieved_match.p1.id).to eq(p1.id)
+      expect(retrieved_match.p2.id).to eq(p2.id)
+      expect(retrieved_match.winner).to be_nil
+    end
 
-  it "can delete a match" do
+    it "can create and access all matchess" do
+    end
+
+    it "can update a match" do
+    end
+
+    it "can delete a match" do
+    end
   end
 
   ########################
