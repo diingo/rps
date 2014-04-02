@@ -81,10 +81,7 @@ module RPS
     ########################
 
     def create_round(options)
-      match_id = options[:match]
-      winner_id = options[:winner]
-
-      round = RPS::Round.new(match_id, winner_id)
+      round = RPS::Round.new(options)
       @rounds[round.id] = round
     end
 

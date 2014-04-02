@@ -111,14 +111,14 @@ describe RPS::DB do
     end
 
     it "can create and get a round" do
-      round = @db.create_round({ match: @match.id , winner: @p1.id })
+      round = @db.create_round({ match_id: @match.id , winner_id: @p1.id, loser_id: @p2.id, p1_choice: "scissors", p2_choice: "paper" })
 
       expect(round.winner_id).to eq(@p1.id)
       expect(round.match_id).to eq(@match.id)
     end
 
     it "can create and access all rounds" do
-      round = @db.create_round({ match: @match.id , winner: @p1.id })
+      round = @db.create_round({ match_id: @match.id , winner_id: @p1.id, loser_id: @p2.id, p1_choice: "scissors", p2_choice: "paper" })
 
       expect(@db.all_rounds.size).to eq(1)
       expect(@db.all_rounds.first.winner_id).to eq(@p1.id)
