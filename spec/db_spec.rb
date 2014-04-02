@@ -102,17 +102,34 @@ describe RPS::DB do
   ## Round CRUD Methods ##
   ########################
 
-  it "can create and get a round" do
+  describe "Round CRUD Methods" do
+    before do
+      @p1 = @db.create_player("Johnny")
+      @p2 = @db.create_player("Sassa")
+      @match = @db.create_match(@p1.id, @p2.id)
+    end
 
-  end
+    it "can create and get a round" do
+      round = @db.create_round({ match: @match.id , winner: @p1.id })
 
-  it "can create and access all rounds" do
-  end
+      expect(round.winner_id).to eq(@p1.id)
+      expect(round.match_id).to eq(@match.id)
+    end
 
-  it "can update a round" do
-  end
+    it "can create and access all rounds" do
+      round = @db.create_round({ match: @match.id , winner: @p1.id })
 
-  it "can delete a round" do
+      expect(@db.all_rounds.size).to eq(1)
+      expect(@db.all_rounds.first.winner_id).to eq(@p1.id)
+    end
+
+    # leave pending for now, may not ever need them
+    xit "can update a round" do
+      round = @db.create_round({ match: @match.id , winner: @p1.id })
+    end
+
+    xit "can delete a round" do
+    end
   end
 
 end

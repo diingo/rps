@@ -64,5 +64,21 @@ module RPS
     def delete_match(mid)
       @matches.delete(mid)
     end
+
+    ########################
+    ## Round CRUD Methods ##
+    ########################
+
+    def create_round(options)
+      match_id = options[:match]
+      winner_id = options[:winner]
+
+      round = RPS::Round.new(match_id, winner_id)
+      @rounds[round.id] = round
+    end
+
+    def get_round(rid)
+      @rounds[rid]
+    end
   end
 end
