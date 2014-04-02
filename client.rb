@@ -33,6 +33,10 @@ class Client
     RPS.db.active_matches(@session_key)
   end
 
+  def match_play(mid)
+    RPS.db.play
+  end
+
   def play_prompt
 <<-eos
 Welcome, #{@username}!

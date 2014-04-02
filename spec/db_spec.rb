@@ -14,6 +14,7 @@ describe RPS::DB do
     expect(@db.all_matches.empty?).to eq(true)
     expect(@db.all_rounds.empty?).to eq(true)
     expect(@db.all_sessions.empty?).to eq(true)
+    expect(@db.all_invites.empty?).to eq(true)
   end
 
   #########################
@@ -165,6 +166,54 @@ describe RPS::DB do
     end
 
     xit "can delete a session" do
+    end
+  end
+
+  #########################
+  ## Invite CRUD Methods ##
+  #########################
+
+  describe "Invite CRUD Methods" do
+    before do
+      @inviter = @db.create_player("Johnny", 123)
+      @invitee = @db.create_player("Sassa", 123)
+      # @match = @db.create_match(@p1.id, @p2.id)
+    end
+
+    it "can create and get an invite" do
+      invite = @db.create_invite(@inviter.id, @invitee.id)
+
+      retrieved_invite = @db.get_invite(invite.id)
+
+      expect(retrieved_invite.id).to eq(invite.id)
+      expect(invite.inviter_id).to eq(@inviter.id)
+      expect(invite.invitee_id).to eq(@invitee.id)
+    end
+
+    it "can create and access all invites" do
+      expect(@db.all_invites.size).to eq(0)
+      # binding.pry
+      invite = @db.create_invite(@inviter.id, @invitee.id)
+
+      expect(@db.all_invites.size).to eq(1)
+      expect(@db.all_invites.first.inviter_id).to eq(@inviter.id)
+      expect(@db.all_invites.first.invitee_id). to eq(@invitee.id)
+    end
+
+    it "can update invites" do
+      invite = @db.create_invite(@inviter.id, @invitee.id)
+      expect(invite.pending).to eq(true)
+
+      @db.update_invite(invite.id, false)
+      expect(invite.pending).to eq(false)
+    end
+
+    xit "can delete invites" do
+      invite = @db.create_invite(@inviter.id, @invitee.id)
+      @db.get_invite(invite.id).to_not be_nil
+
+      @db.delete_invite(invite.id)
+      @db.get_invite(invite.id).to be_nil
     end
   end
 

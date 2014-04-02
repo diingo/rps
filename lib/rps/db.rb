@@ -3,10 +3,10 @@ module RPS
     @__db_instance ||= DB.new
   end
 
-# @sessions = {
-#   1 => { :user_id => 1},
-#   2 => { :user_id => 2}
-# }
+# # @sessions = {
+# #   1 => { :user_id => 1},
+# #   2 => { :user_id => 2}
+# # }
 
   class DB
     def initialize
@@ -31,6 +31,10 @@ module RPS
 
     def all_sessions
       @sessions.values
+    end
+
+    def all_invites
+      @invites.values
     end
 
     #########################
@@ -103,6 +107,24 @@ module RPS
       @sessions[sid]
     end
 
+    ##########################
+    ## Invite CRUD Methods ##
+    ##########################
+
+    def create_invite(inviter_id, invitee_id)
+      invite = RPS::Invite.new(inviter_id, invitee_id)
+      @invites[invite.id] = invite
+    end
+
+    def get_invite(iid)
+      @invites[iid]
+    end
+
+    def update_invite(iid, new_status)
+      invite = @invites[iid]
+      invite.pending = new_status
+    end
+
     ####################
     ## Client Methods ##
     ####################
@@ -119,16 +141,54 @@ module RPS
       session_key = session.id
     end
 
-    ####################
-    ## Client Queries ##
-    ####################
+    def start_round(mid, session_key, current_user_choice)
+      match = get_match(mid)
 
-    # Not yet tested
+      player = @players[sessions[session_key].user_id]
 
-    def active_matches(session_key)
-      session = @sessions[session_key]
-      uid = session.user_id
-      user_active_matches = @matches.values.select { |match| match.p1_id == uid || match.p2_id == uid && match.winner == nil }
+      if player = player
+      end
+      create_round(match_id: mid)
     end
+
+    def end_round(mid, rid, other_user_choice)
+      p1_choice = p1_choice.to_sym
+      p2_choice = p2_choice.to_sym
+
+      choice_map = {
+        rock: {
+          paper: "lose",
+          scissors: "win"
+        },
+
+        paper: {
+          scissors: "lose",
+          rock: "win"
+        },
+
+        scissors: {
+          rock: "lose",
+          paper: "win"
+        }
+      }
+
+      if choice_map[p1_choice][p2_choice] == "win"
+        winner
+        loser
+      elsif choice_map[p1_choice][p2_choice] == "lose"
+      end
+    end
+
+#     ####################
+#     ## Client Queries ##
+#     ####################
+
+#     # Not yet tested
+
+#     # def active_matches(session_key)
+#     #   session = @sessions[session_key]
+#     #   uid = session.user_id
+#     #   user_active_matches = @matches.values.select { |match| match.p1_id == uid || match.p2_id == uid && match.winner == nil }
+#     # end
   end
 end

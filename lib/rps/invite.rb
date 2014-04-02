@@ -1,6 +1,8 @@
 module RPS
   class Invite
-    attr_reader :id, :inviter_id, :invitee_id, :pending
+    attr_reader :id, :inviter_id, :invitee_id
+    attr_accessor :pending
+
     @@counter = 0
 
     def initialize(inviter_id, invitee_id)
