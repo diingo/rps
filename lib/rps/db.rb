@@ -179,16 +179,20 @@ module RPS
       end
     end
 
-#     ####################
-#     ## Client Queries ##
-#     ####################
+    ####################
+    ## Client Queries ##
+    ####################
 
-#     # Not yet tested
+    # Not yet tested
 
-#     # def active_matches(session_key)
-#     #   session = @sessions[session_key]
-#     #   uid = session.user_id
-#     #   user_active_matches = @matches.values.select { |match| match.p1_id == uid || match.p2_id == uid && match.winner == nil }
-#     # end
+    def get_all_match_rounds(mid)
+      all_rounds.select { |round| round.match_id == mid }
+    end
+
+    def active_matches(session_key)
+      session = @sessions[session_key]
+      uid = session.user_id
+      user_active_matches = @matches.values.select { |match| match.p1_id == uid || match.p2_id == uid && match.winner == nil }
+    end
   end
 end

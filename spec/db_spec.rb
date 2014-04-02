@@ -208,6 +208,7 @@ describe RPS::DB do
       expect(invite.pending).to eq(false)
     end
 
+    # may not need this - leave pending for now
     xit "can delete invites" do
       invite = @db.create_invite(@inviter.id, @invitee.id)
       @db.get_invite(invite.id).to_not be_nil
