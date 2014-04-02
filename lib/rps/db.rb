@@ -7,6 +7,7 @@ module RPS
 #   1 => { :user_id => 1},
 #   2 => { :user_id => 2}
 # }
+
   class DB
     def initialize
       @matches = {}
@@ -25,6 +26,10 @@ module RPS
 
     def all_matches
       @matches.values
+    end
+
+    def all_sessions
+      @sessions.values
     end
 
     #########################
@@ -85,5 +90,24 @@ module RPS
     def get_round(rid)
       @rounds[rid]
     end
+
+    ##########################
+    ## Session CRUD Methods ##
+    ##########################
+
+    def create_session(uid)
+      session = RPS::Session.new(uid)
+      @sessions[session.id] = session
+      session
+    end
+
+    def get_session(sid)
+      @sessions[sid]
+    end
+
+    ####################
+    ## Client Methods ##
+    ####################
+
   end
 end

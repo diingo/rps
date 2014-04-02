@@ -1,7 +1,7 @@
 module RPS
   class Session
     attr_reader :id, :user_id
-    @@counter
+    @@counter = 0
 
     def initialize(uid)
       @@counter += 1

@@ -9,10 +9,11 @@ describe RPS::DB do
     expect(RPS::DB).to be_a(Class)
   end
 
-  it "starts with no players, no rounds, no matches" do
+  it "starts with no players, no rounds, no matches, no sessions" do
     expect(@db.all_players.empty?).to eq(true)
     expect(@db.all_matches.empty?).to eq(true)
     expect(@db.all_rounds.empty?).to eq(true)
+    expect(@db.all_sessions.empty?).to eq(true)
   end
 
   #########################
@@ -129,6 +130,41 @@ describe RPS::DB do
     end
 
     xit "can delete a round" do
+    end
+  end
+
+  ##########################
+  ## Session CRUD Methods ##
+  ##########################
+
+  describe "Session CRUD Methods" do
+    before do
+      @p1 = @db.create_player("Johnny")
+      @p2 = @db.create_player("Sassa")
+      @match = @db.create_match(@p1.id, @p2.id)
+    end
+
+    it "can create and get a session" do
+      session = @db.create_session(@p1.id)
+
+      retrieved_session = @db.get_session(session.id)
+
+      expect(retrieved_session.id).to eq(session.id)
+      expect(retrieved_session.user_id).to eq(@p1.id)
+    end
+
+    it "can create and access all sessions" do
+      session = @db.create_session(@p1.id)
+
+      expect(@db.all_sessions.size).to eq(1)
+      expect(@db.all_sessions.first.user_id).to eq(@p1.id)
+    end
+
+    # leave pending for now
+    xit "can update a session" do
+    end
+
+    xit "can delete a session" do
     end
   end
 
