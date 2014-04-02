@@ -8,7 +8,7 @@ module RPS
     def initialize(p1_id, p2_id)
       @@counter += 1
       @id = @@counter
-      
+
       @p1_id = p1_id
       @p2_id = p2_id
       @winner = nil

@@ -19,7 +19,7 @@ describe RPS::Player do
 
   it "has a password" do
     player = RPS::Player.new("Jack", 123)
-    
+
     expect(player.password).to eq(123)
   end
 

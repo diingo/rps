@@ -109,5 +109,28 @@ module RPS
     ## Client Methods ##
     ####################
 
+    # Not yet tested
+
+    def sign_up(username, pw)
+      create_player(username, pw)
+    end
+
+    def sign_in(username, pw)
+      player = @players.values.find { |player| player.name == username && player.password == pw }
+      session = session_create(player.id)
+      session_key = session.id
+    end
+
+    ####################
+    ## Client Queries ##
+    ####################
+
+    # Not yet tested
+
+    def active_matches(session_key)
+      session = @sessions[session_key]
+      uid = session.user_id
+      user_active_matches = @matches.values.select { |match| match.p1_id == uid || match.p2_id == uid && match.winner == nil }
+    end
   end
 end
