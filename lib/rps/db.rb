@@ -3,11 +3,16 @@ module RPS
     @__db_instance ||= DB.new
   end
 
+# @sessions = {
+#   1 => { :user_id => 1},
+#   2 => { :user_id => 2}
+# }
   class DB
     def initialize
       @matches = {}
       @rounds = {}
       @players = {}
+      @sessions = {}
     end
 
     def all_players

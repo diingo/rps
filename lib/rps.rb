@@ -5,17 +5,18 @@ end
 
 
 # Require all of our project files
-require_relative 'rps/player.rb'
-require_relative 'rps/match.rb'
-require_relative 'rps/round.rb'
-require_relative 'rps/db.rb'
+# require_relative 'rps/player.rb'
+# require_relative 'rps/match.rb'
+# require_relative 'rps/round.rb'
+# require_relative 'rps/db.rb'
+# require_relative 'rps/session.rb'
 # require_relative 'use_case.rb'
 
 
 # this looks nicer but doesn't work
 # Dir["task-manager/use_cases/*"].each {|file| require file }
 
-# adds all files in task-manager/use_cases
-# Dir["#{File.dirname(__FILE__)}/task-manager/use_cases/*.rb"].each { |f| require(f) }
+# adds all files in /rps
+Dir["#{File.dirname(__FILE__)}/rps/*.rb"].each { |f| require(f) }
 
 require 'pry-debugger'
