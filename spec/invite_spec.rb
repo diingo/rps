@@ -18,5 +18,11 @@ describe RPS::Invite do
       expect(invite.inviter_id).to eq(1)
       expect(invite.invitee_id).to eq(2)
     end
+
+    it "starts with pending set to true" do
+      invite = RPS::Invite.new(1,2)
+
+      expect(invite.pending).to eq(true)
+    end
   end
 end

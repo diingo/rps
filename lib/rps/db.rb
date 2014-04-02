@@ -14,6 +14,7 @@ module RPS
       @rounds = {}
       @players = {}
       @sessions = {}
+      @invites = {}
     end
 
     def all_players
