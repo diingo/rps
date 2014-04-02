@@ -22,11 +22,11 @@ describe RPS::DB do
 
   describe "Player CRUD Methods" do
     before do
-      @player = @db.create_player("Jack")
+      @player = @db.create_player("Jack", 123)
     end
 
     it "can create and get a player" do
-      player = @db.create_player("Jack")
+      player = @db.create_player("Jack", 123)
       retrieved_player = @db.get_player(player.id)
 
       expect(retrieved_player.name).to eq("Jack")
@@ -59,8 +59,8 @@ describe RPS::DB do
 
   describe "Match CRUD Methods" do
     before do
-      @p1 = @db.create_player("Johnny")
-      @p2 = @db.create_player("Sassa")
+      @p1 = @db.create_player("Johnny", 123)
+      @p2 = @db.create_player("Sassa", 123)
     end
 
     # TO DO - is this test ok
@@ -105,8 +105,8 @@ describe RPS::DB do
 
   describe "Round CRUD Methods" do
     before do
-      @p1 = @db.create_player("Johnny")
-      @p2 = @db.create_player("Sassa")
+      @p1 = @db.create_player("Johnny", 123)
+      @p2 = @db.create_player("Sassa", 123)
       @match = @db.create_match(@p1.id, @p2.id)
     end
 
@@ -139,8 +139,8 @@ describe RPS::DB do
 
   describe "Session CRUD Methods" do
     before do
-      @p1 = @db.create_player("Johnny")
-      @p2 = @db.create_player("Sassa")
+      @p1 = @db.create_player("Johnny", 123)
+      @p2 = @db.create_player("Sassa", 123)
       @match = @db.create_match(@p1.id, @p2.id)
     end
 

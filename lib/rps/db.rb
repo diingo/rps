@@ -36,8 +36,8 @@ module RPS
     ## Player CRUD Methods ##
     #########################
 
-    def create_player(name)
-      player = RPS::Player.new(name)
+    def create_player(name, pw)
+      player = RPS::Player.new(name, pw)
       @players[player.id] = player
     end
 
