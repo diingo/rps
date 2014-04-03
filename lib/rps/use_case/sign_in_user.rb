@@ -9,7 +9,7 @@ module RPS
 
       session = RPS.db.create_session(player.id)
 
-      success({ session: session })
+      success({ session: session, session_key: session.id })
     end
   end
 end
