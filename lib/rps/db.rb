@@ -213,6 +213,11 @@ module RPS
       all_rounds.select { |round| round.match_id == mid }
     end
 
+    def get_all_match_rounds_won(mid)
+      match_rounds = get_all_match_rounds(mid)
+      rounds_won = match_rounds.select { |round| round.winner_id != nil }
+    end
+
     def get_current_match_round(mid)
       match_rounds = get_all_match_rounds(mid)
       current_match_round = match_rounds.find { |round| round.winning_player == nil && round.winner_id == nil}
