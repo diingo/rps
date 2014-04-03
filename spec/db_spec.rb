@@ -269,9 +269,10 @@ describe RPS::DB do
           expect(match.p2_id).to eq(@p2.id)
         end
 
-        xit "creates a blank round for the match" do
+        it "creates a blank round for the match" do
+          match = @db.all_matches.first
           all_rounds = @db.all_rounds
-
+          expect(all_rounds.first.match_id).to eq(match.id)
         end
       end
 

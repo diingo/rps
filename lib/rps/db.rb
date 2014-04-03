@@ -132,7 +132,8 @@ module RPS
     def accept_invite(iid)
       invite = @invites[iid]
       update_invite(iid, false)
-      create_match(invite.inviter_id, invite.invitee_id)
+      match = create_match(invite.inviter_id, invite.invitee_id)
+      create_round({ match_id: match.id })
     end
 
     # Not yet tested
