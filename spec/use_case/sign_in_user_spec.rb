@@ -23,8 +23,8 @@ describe RPS::SignIn do
       pw = "123"
       result = RPS::SignIn.run({ username: username, password: pw })
 
-      expect(result.failure?).to eq(true)
-      expect(result.error).to eq(:user_nonexistent)
+      expect(result.error?).to eq(true)
+      expect(result.error).to eq(:player_nonexistent)
     end
 
     it "errors if password is incorrect" do
@@ -34,7 +34,7 @@ describe RPS::SignIn do
       player = RPS.db.create_player(username, pw)
       result = RPS::SignIn.run({ username: username, password: wrong_pw })
 
-      expect(result.failure?).to eq(true)
+      expect(result.error?).to eq(true)
       expect(result.error).to eq(:incorrect_password)
     end
   end
