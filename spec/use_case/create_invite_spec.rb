@@ -4,8 +4,8 @@ describe RPS::CreateInvite do
   before do
     @p1 = RPS.db.create_player("Jack", "123")
     @p2 = RPS.db.create_player("Zel", "012")
-    sign_in_result = RPS::SignIn.run({ username: @p1.name, password: @p1.password })
-    @session_key = sign_in_result.session_key
+    @session = RPS.db.create_session(@p1.id)
+    @session_key = @session.id
   end
 
   xit 'exists' do

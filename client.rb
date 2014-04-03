@@ -34,7 +34,8 @@ class Client
   end
 
   def match_play(mid)
-    RPS.db.play
+    # First run use case for get match round - this will make sure the match exists, that it hasn't been won, and return the round that has not been won yet
+    # Then it will run the play round use case
   end
 
   def play_prompt

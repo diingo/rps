@@ -1,6 +1,8 @@
 module RPS
   class CreateInvite < UseCase
     def run(inputs)
+      # also need a failure for when invitee id is same as inviter id
+      
       return failure(:invitee_nonexistent) if RPS.db.get_player(inputs[:invitee_id]).nil?
 
       session = RPS.db.get_session(inputs[:session_key])

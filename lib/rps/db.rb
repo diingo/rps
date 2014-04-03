@@ -93,6 +93,19 @@ module RPS
       @rounds[rid]
     end
 
+    # CAREFUL with this one
+    # not yet tested
+    # WATCH OUT
+    # TURN BACK NOW
+    def update_round(uid, attrs)
+      round = @rounds[uid]
+      round.winner_id = attrs[:winner_id] if attrs[:winner_id]
+      round.loser_id = attrs[:loser_id] if attrs[:winner_id]
+      round.winning_player = attrs[:winning_player] if attrs[:winning_player]
+      round.p1_choice = attrs[:p1_choice] if attrs[:p1_choice]
+      round.p2_choice = attrs[:p2_choice] if attrs[:p2_choice]
+    end
+
     ##########################
     ## Session CRUD Methods ##
     ##########################
@@ -198,6 +211,11 @@ module RPS
 
     def get_all_match_rounds(mid)
       all_rounds.select { |round| round.match_id == mid }
+    end
+
+    def get_current_match_round(mid)
+      match_rounds = get_all_match_rounds(mid)
+      current_match_round = match_rounds.find { |round| round.winning_player == nil && round.winner_id == nil}
     end
 
     def active_matches(session_key)
