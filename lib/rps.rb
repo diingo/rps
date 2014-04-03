@@ -10,7 +10,7 @@ end
 # require_relative 'rps/round.rb'
 # require_relative 'rps/db.rb'
 # require_relative 'rps/session.rb'
-# require_relative 'use_case.rb'
+
 
 
 # this looks nicer but doesn't work
@@ -18,6 +18,9 @@ end
 
 # adds all files in /rps
 Dir["#{File.dirname(__FILE__)}/rps/*.rb"].each { |f| require(f) }
+
+# ensures use_case.rb is required first before other use case files that inherit from it
+require_relative 'use_case.rb'
 Dir["#{File.dirname(__FILE__)}/rps/use_case/*.rb"].each { |f| require(f) }
 
 require 'pry-debugger'

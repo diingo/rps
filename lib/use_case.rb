@@ -18,7 +18,7 @@ module RPS
     def success(data={})
       UseCaseSuccess.new(data)
     end
-  enda
+  end
 
   class UseCaseFailure < OpenStruct
     def success?

@@ -192,6 +192,9 @@ module RPS
     ####################
 
     # Not yet tested
+    def find_player_by_username(name)
+      all_players.find { |player| player.name == name}
+    end
 
     def get_all_match_rounds(mid)
       all_rounds.select { |round| round.match_id == mid }
