@@ -218,4 +218,65 @@ describe RPS::DB do
     end
   end
 
+  ####################
+  ## Client Queries ##
+  ####################
+
+  describe "Client Queries" do
+    before do
+      @p1 = @db.create_player("Rusty", "123")
+      @p2 = @db.create_player("Dove", "123")
+    end
+    it "gets all rounds for a match, given match id" do
+      match = @db.create_match(@p1.id, @p2.id)
+      r1 = @db.create_round({ match_id: match.id, p1_choice: "rock" })
+      r2 = @db.create_round({ match_id: match.id, p1_choice: "paper" })
+      r3 = @db.create_round({ match_id: match.id, p1_choice: "scissors" })
+      rounds = @db.get_all_match_rounds(match.id)
+
+      rounds_p1_choices = rounds.map { |round| round.p1_choice }
+      expect(rounds_p1_choices).to include("rock", "paper", "scissors")
+    end
+  end
+
+  ####################
+  ## Client Methods ##
+  ####################
+
+  # to be abstracted to User Cases
+  describe "Client Methods" do
+
+    describe "player/user" do
+
+      context "accepts an invite" do
+        before do
+          @p1 = @db.create_player("Pim", "123")
+          @p2 = @db.create_player("Pooka", "123")
+          @invite = @db.create_invite(@p1.id, @p2.id)
+          @db.accept_invite(@invite.id)
+        end
+
+        it "invite pending attribute gets set to false" do
+          invite = @db.get_invite(@invite.id)
+          expect(invite.pending).to eq(false)
+        end
+
+        it "creates a match between inviter and invitee" do
+          match = @db.all_matches.first
+
+          expect(@db.all_matches.size).to eq(1)
+          expect(match.p1_id).to eq(@p1.id)
+          expect(match.p2_id).to eq(@p2.id)
+        end
+
+        xit "creates a blank round for the match" do
+          all_rounds = @db.all_rounds
+
+        end
+      end
+
+    end
+
+  end
+
 end

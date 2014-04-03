@@ -18,5 +18,6 @@ end
 
 # adds all files in /rps
 Dir["#{File.dirname(__FILE__)}/rps/*.rb"].each { |f| require(f) }
+Dir["#{File.dirname(__FILE__)}/rps/use_case/*.rb"].each { |f| require(f) }
 
 require 'pry-debugger'

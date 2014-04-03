@@ -129,6 +129,12 @@ module RPS
     ## Client Methods ##
     ####################
 
+    def accept_invite(iid)
+      invite = @invites[iid]
+      update_invite(iid, false)
+      create_match(invite.inviter_id, invite.invitee_id)
+    end
+
     # Not yet tested
 
     def sign_up(username, pw)
@@ -140,6 +146,7 @@ module RPS
       session = session_create(player.id)
       session_key = session.id
     end
+
 
     def start_round(mid, session_key, current_user_choice)
       match = get_match(mid)
