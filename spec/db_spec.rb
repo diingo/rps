@@ -126,8 +126,33 @@ describe RPS::DB do
     end
 
     # leave pending for now, may not ever need them
-    xit "can update a round" do
-      round = @db.create_round({ match: @match.id , winner: @p1.id })
+    context "update a round" do
+      it "can update a round for all attributes" do
+        round = @db.create_round({ match_id: @match.id})
+        winner_id = 1
+        loser_id = 2
+        p1_choice = "rock"
+        p2_choice = "paper"
+        winning_player = "p1"
+
+        @db.update_round(round.id, { winner_id: winner_id, loser_id: loser_id, p1_choice: p1_choice, winning_player: winning_player, p2_choice: p2_choice })
+        expect(round.winner_id).to eq(winner_id)
+        expect(round.loser_id).to eq(loser_id)
+        expect(round.p1_choice).to eq(p1_choice)
+        expect(round.winning_player).to eq(winning_player)
+        expect(round.p2_choice).to eq(p2_choice)
+      end
+
+      it "can update a round with no attributes" do
+        round = @db.create_round({ match_id: @match.id })
+
+        @db.update_round(round.id)
+        expect(round.winner_id).to be_nil
+        expect(round.loser_id).to be_nil
+        expect(round.p1_choice).to be_nil
+        expect(round.winning_player).to be_nil
+        expect(round.p2_choice).to be_nil
+      end
     end
 
     xit "can delete a round" do

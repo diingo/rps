@@ -8,12 +8,12 @@ describe RPS::PlayRound, pending: true do
     @session_key = RPS.db.create_session(@p1.id).id
   end
 
-  it 'exists' do
+  xit 'exists' do
     expect(RPS::PlayRound).to be_a(Class)
   end
 
   context "success" do
-    if "updates a round if it's blank" do
+    it "updates a round if it's blank" do
       result = RPS::PlayRound({session_key: @session_key, choice: "rock"})
       expect(result.round.winner).to be_nil
 

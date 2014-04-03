@@ -129,8 +129,8 @@ module RPS
       player_type = "p1" if match.p1_id == player_id
       player_type = "p2" if match.p2_id == player_id
 
-      return :p1_choice if player_type = "p1"
-      return :p2_choice if player_type = "p2"
+      return :p1_choice if player_type == "p1"
+      return :p2_choice if player_type == "p2"
     end
   end
 end

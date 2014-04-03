@@ -3,6 +3,7 @@ module RPS
     @__db_instance ||= DB.new
   end
 
+# another way to implement sessions - no ruby class, just a hash
 # # @sessions = {
 # #   1 => { :user_id => 1},
 # #   2 => { :user_id => 2}
@@ -97,8 +98,8 @@ module RPS
     # not yet tested
     # WATCH OUT
     # TURN BACK NOW
-    def update_round(uid, attrs)
-      round = @rounds[uid]
+    def update_round(rid, attrs = {})
+      round = @rounds[rid]
       round.winner_id = attrs[:winner_id] if attrs[:winner_id]
       round.loser_id = attrs[:loser_id] if attrs[:winner_id]
       round.winning_player = attrs[:winning_player] if attrs[:winning_player]

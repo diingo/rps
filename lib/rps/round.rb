@@ -1,7 +1,8 @@
 module RPS
 
   class Round
-    attr_reader :match_id, :winner_id, :id, :loser_id, :p1_choice, :p2_choice, :winning_player
+    attr_reader :match_id, :id
+    attr_accessor :winner_id, :loser_id, :p1_choice, :p2_choice, :winning_player
     @@counter = 0
 
     def initialize(attrs)
