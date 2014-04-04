@@ -94,10 +94,6 @@ module RPS
       @rounds[rid]
     end
 
-    # CAREFUL with this one
-    # not yet tested
-    # WATCH OUT
-    # TURN BACK NOW
     def update_round(rid, attrs = {})
       round = @rounds[rid]
       round.winner_id = attrs[:winner_id] if attrs[:winner_id]
@@ -143,75 +139,24 @@ module RPS
     ## Client Methods ##
     ####################
 
-    def accept_invite(iid)
-      invite = @invites[iid]
-      update_invite(iid, false)
-      match = create_match(invite.inviter_id, invite.invitee_id)
-      create_round({ match_id: match.id })
-    end
-
-    # Not yet tested
-
-    def sign_up(username, pw)
-      create_player(username, pw)
-    end
-
-    def sign_in(username, pw)
-      player = @players.values.find { |player| player.name == username && player.password == pw }
-      session = session_create(player.id)
-      session_key = session.id
-    end
-
-
-    def start_round(mid, session_key, current_user_choice)
-      match = get_match(mid)
-
-      player = @players[sessions[session_key].user_id]
-
-      if player = player
-      end
-      create_round(match_id: mid)
-    end
-
-    def end_round(mid, rid, other_user_choice)
-      p1_choice = p1_choice.to_sym
-      p2_choice = p2_choice.to_sym
-
-      choice_map = {
-        rock: {
-          paper: "lose",
-          scissors: "win"
-        },
-
-        paper: {
-          scissors: "lose",
-          rock: "win"
-        },
-
-        scissors: {
-          rock: "lose",
-          paper: "win"
-        }
-      }
-
-      if choice_map[p1_choice][p2_choice] == "win"
-        winner
-        loser
-      elsif choice_map[p1_choice][p2_choice] == "lose"
-      end
-    end
+    # now in use case, left as example
+    # def accept_invite(iid)
+    #   invite = @invites[iid]
+    #   update_invite(iid, false)
+    #   match = create_match(invite.inviter_id, invite.invitee_id)
+    #   create_round({ match_id: match.id })
+    # end
 
     ####################
     ## Client Queries ##
     ####################
 
-    # Not yet tested
-    def find_player_by_username(name)
-      all_players.find { |player| player.name == name}
-    end
-
     def get_all_match_rounds(mid)
       all_rounds.select { |round| round.match_id == mid }
+    end
+
+    def find_player_by_username(name)
+      all_players.find { |player| player.name == name}
     end
 
     def get_all_match_rounds_won(mid)
@@ -221,13 +166,21 @@ module RPS
 
     def get_current_match_round(mid)
       match_rounds = get_all_match_rounds(mid)
-      current_match_round = match_rounds.find { |round| round.winning_player == nil && round.winner_id == nil}
+      current_match_round = match_rounds.find { |round| round.winner_id == nil}
     end
 
-    def active_matches(session_key)
-      session = @sessions[session_key]
-      uid = session.user_id
-      user_active_matches = @matches.values.select { |match| match.p1_id == uid || match.p2_id == uid && match.winner == nil }
+    def active_matches(uid)
+      user_active_matches = @matches.values.select { |match| (match.p1_id == uid || match.p2_id == uid) && match.winner == nil }
     end
+
+    # Not yet tested
+
+    # old version that uses session key, now we get user id from session key in use case
+    # and use that instead
+    # def active_matches(session_key)
+    #   session = @sessions[session_key]
+    #   uid = session.user_id
+    #   user_active_matches = @matches.values.select { |match| match.p1_id == uid || match.p2_id == uid && match.winner == nil }
+    # end
   end
 end

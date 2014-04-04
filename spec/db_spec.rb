@@ -252,6 +252,7 @@ describe RPS::DB do
       @p1 = @db.create_player("Rusty", "123")
       @p2 = @db.create_player("Dove", "123")
     end
+
     it "gets all rounds for a match, given match id" do
       match = @db.create_match(@p1.id, @p2.id)
       r1 = @db.create_round({ match_id: match.id, p1_choice: "rock" })
@@ -262,6 +263,50 @@ describe RPS::DB do
       rounds_p1_choices = rounds.map { |round| round.p1_choice }
       expect(rounds_p1_choices).to include("rock", "paper", "scissors")
     end
+
+    it "finds a player by username" do
+      player = @db.find_player_by_username(@p1.name)
+      expect(player.name).to eq("Rusty")
+      expect(player.id).to eq(@p1.id)
+    end
+
+    it "gets all match rounds won" do
+      match = @db.create_match(@p1.id, @p2.id)
+      r1 = @db.create_round({ match_id: match.id, winner_id: @p1.id })
+      r2 = @db.create_round({ match_id: match.id })
+      r3 = @db.create_round({ match_id: match.id, winner_id: @p1.id })
+
+      rounds_won = RPS.db.get_all_match_rounds_won(match.id)
+      rounds_won_ids = rounds_won.map { |round| round.id }
+      expect(rounds_won_ids).to include(r1.id, r3.id)
+      expect(rounds_won_ids).to_not include(r2.id)
+    end
+
+    it "gets all currently active match round" do
+      match = @db.create_match(@p1.id, @p2.id)
+      r1 = @db.create_round({ match_id: match.id, winner_id: @p1.id })
+      r2 = @db.create_round({ match_id: match.id, winner_id: @p2.id })
+      r3 = @db.create_round({ match_id: match.id, winner_id: @p1.id })
+      r4 = @db.create_round({ match_id: match.id })
+
+      active_round = @db.get_current_match_round(match.id)
+
+      expect(active_round.id).to eq(r4.id)
+    end
+
+    it "gets active matches for a user" do
+      m1 = @db.create_match(@p1.id, @p2.id)
+      m2 = @db.create_match(@p1.id, @p2.id)
+      m3 = @db.create_match(@p1.id, @p2.id)
+
+      m2.winner = @p1.id
+
+      active_matches = @db.active_matches(@p1.id)
+      active_matches_ids = active_matches.map { |match| match.id }
+      expect(active_matches_ids).to include(m1.id, m3.id)
+      expect(active_matches_ids).to_not include(m2.id)
+    end
+
   end
 
   ####################
@@ -269,40 +314,40 @@ describe RPS::DB do
   ####################
 
   # to be abstracted to User Cases
-  describe "Client Methods" do
+  # describe "Client Methods" do
 
-    describe "player/user" do
+  #   describe "player/user" do
 
-      context "accepts an invite" do
-        before do
-          @p1 = @db.create_player("Pim", "123")
-          @p2 = @db.create_player("Pooka", "123")
-          @invite = @db.create_invite(@p1.id, @p2.id)
-          @db.accept_invite(@invite.id)
-        end
+  #     context "accepts an invite" do
+  #       before do
+  #         @p1 = @db.create_player("Pim", "123")
+  #         @p2 = @db.create_player("Pooka", "123")
+  #         @invite = @db.create_invite(@p1.id, @p2.id)
+  #         @db.accept_invite(@invite.id)
+  #       end
 
-        it "invite pending attribute gets set to false" do
-          invite = @db.get_invite(@invite.id)
-          expect(invite.pending).to eq(false)
-        end
+  #       it "invite pending attribute gets set to false" do
+  #         invite = @db.get_invite(@invite.id)
+  #         expect(invite.pending).to eq(false)
+  #       end
 
-        it "creates a match between inviter and invitee" do
-          match = @db.all_matches.first
+  #       it "creates a match between inviter and invitee" do
+  #         match = @db.all_matches.first
 
-          expect(@db.all_matches.size).to eq(1)
-          expect(match.p1_id).to eq(@p1.id)
-          expect(match.p2_id).to eq(@p2.id)
-        end
+  #         expect(@db.all_matches.size).to eq(1)
+  #         expect(match.p1_id).to eq(@p1.id)
+  #         expect(match.p2_id).to eq(@p2.id)
+  #       end
 
-        it "creates a blank round for the match" do
-          match = @db.all_matches.first
-          all_rounds = @db.all_rounds
-          expect(all_rounds.first.match_id).to eq(match.id)
-        end
-      end
+  #       it "creates a blank round for the match" do
+  #         match = @db.all_matches.first
+  #         all_rounds = @db.all_rounds
+  #         expect(all_rounds.first.match_id).to eq(match.id)
+  #       end
+  #     end
 
-    end
+  #   end
 
-  end
+  # end
 
 end

@@ -95,16 +95,16 @@ module RPS
       }
 
       if choice_map[p1_choice][p2_choice] == "win"
-        winning_player = "p1"
+        # winning_player = "p1"
         winner_id = inputs[:match].p1_id
         loser_id = inputs[:match].p2_id
       elsif choice_map[p1_choice][p2_choice] == "lose"
-        winning_player = "p2"
+        # winning_player = "p2"
         winner_id = inputs[:match].p2_id
         loser_id = inputs[:match].p1_id
       end
 
-      round.winning_player = winning_player
+      # round.winning_player = winning_player
       @loser = RPS.db.get_player(loser_id)
       @winner = RPS.db.get_player(winner_id)
     end

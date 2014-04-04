@@ -14,7 +14,8 @@ module RPS
       @loser_id = attrs[:loser_id]
 
       # will be a string that is either "p1" or "p2"
-      @winning_player = attrs[:winning_player]
+      # may not use
+      # @winning_player = attrs[:winning_player]
 
       @p1_choice = attrs[:p1_choice]
       @p2_choice = attrs[:p2_choice]
